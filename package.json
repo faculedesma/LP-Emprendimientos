@@ -34,6 +34,7 @@
   },
   "dependencies": {
     "antd": "3.10.3",
+    "axios": "0.18.0",
     "connected-react-router": "4.4.1",
     "object-assign": "4.1.1",
     "react": "16.4.2",
@@ -106,7 +107,14 @@
     "webpack-dev-middleware": "3.2.0",
     "webpack-hot-middleware": "2.22.3"
   },
-  "keywords": ["react", "redux", "webpack", "ant design", "hot reloading", "browser sync"],
+  "keywords": [
+    "react",
+    "redux",
+    "webpack",
+    "ant design",
+    "hot reloading",
+    "browser sync"
+  ],
   "jest": {
     "moduleNameMapper": {
       "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/tools/assetsTransformer.js",
@@ -186,6 +194,7 @@
       "jquery": true,
       "jest": true
     },
-    "globals": {}
+    "globals": {},
+    "proxy": "http://localhost:3000"
   }
 }
