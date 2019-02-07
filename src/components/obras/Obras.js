@@ -1,37 +1,37 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import { List } from 'antd';
+import { Progress } from 'antd';
+import loadObras from '../../redux/obras/ObrasActions';
+import './Obras.scss';
 
-class Obras extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      obras: []
-    };
-  }
+class Obras extends Component {
+  state = {
+    tareas: [
+      'Tarea 1',
+      'Tarea 2',
+      'Tarea 3',
+      'Tarea 4',
+      'Tarea 5',
+    ]
+  };
 
-  componentDidMount() {
-    axios.get('http://localhost:3000/obras')
-      .then(obras => {
-        console.log(obras);
-        this.setState({
-          obras: obras.data
-        });
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  }
+  // componentWillMount() {
+  //   this.setState({
+  //     obras: this.props.loadObras
+  //   });
+  // }
 
   render() {
-    const obras = this.state.obras;
-    const listItems = obras.map(obra =>
-      <li>{obra.Obra}</li>
-    );
+    //const obras = this.state.obras;
+    console.log(loadObras());
+    // const listItems = obras.map(obra =>
+    //   <li>{obra.Obra}</li>
+    // );
 
     return (
       <div>
         <h1>Obras</h1>
-        <ul>{listItems}</ul>
+        {/* <ul>{listItems}</ul> */}
       </div >
     );
   }

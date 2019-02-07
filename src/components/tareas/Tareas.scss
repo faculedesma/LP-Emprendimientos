@@ -1,0 +1,83 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300');
+
+.icon-finish {
+  font-size: 35px !important;
+  color: green !important;
+}
+
+.icon-pending {
+  font-size: 35px !important;
+  color: gray !important;
+}
+
+.tareas-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.tareas-container__header {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.tareas-container__header h1 {
+  width: 100%;
+  font-family: 'Open Sans Condensed', sans-serif;
+  font-size: 55px;
+  text-align: center;
+  margin: 40px 0;
+}
+
+.icon-plus {
+  font-size: 50px !important;
+  color: #0a0a1c !important;
+}
+
+.tareas-container__table {
+  width: 100%;
+  margin: 50px 0 100px;
+}
+
+.ant-collapse {
+  font-family: 'Open Sans Condensed', sans-serif;
+  font-size: 40px;
+}
+
+.ant-collapse-item {
+  margin: 20px 0;
+}
+
+.ant-collapse-header {
+  padding: 0 !important;
+  margin-top: 40px !important;
+  margin-bottom: 40px;
+  margin-left: 40px;
+}
+
+.tareas-container__stadistics {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 40px 0;
+}
+
+.tareas-container__stadistics p {
+  font-family: 'Open Sans Condensed', sans-serif;
+  font-size: 50px; 
+}
+
+.tareas-container__stadistics > div > div {
+  width: 170px;
+  height: 120px;
+}
+
+.tareas-container__stadistics span {
+  font-size: 35px;
+  margin-top: 25px;
+}

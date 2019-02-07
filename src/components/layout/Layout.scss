@@ -1,0 +1,89 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300');
+
+//Common
+.app-layout {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+ul {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+}
+
+i {
+  font-size: 50px !important;
+  color: white;
+}
+
+//Header
+.app-layout__header {
+  width: 100%;
+  height: 125px;
+  background-color: #0a0a1c;
+}
+
+.app-layout__header ul li:first-child {
+  height: 55px;
+  width: 55px;
+  // border: 3px solid white;
+  // border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.app-layout__header ul li:first-child div {
+  height: 10%;
+  width: 80%;
+  background-color: white;
+  margin: 7% 0;
+}
+
+.app-layout__header ul li:last-child i { 
+  margin-left: 80vw;
+}
+
+//Content
+.app-layout__content {
+  width: 85%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.app-layout__content__title {
+  width: 100%;
+  text-align: center;
+  border-bottom: 1.5px solid #0a0a1c;
+}
+
+.app-layout__content__title p {
+  font-family: 'Open Sans Condensed', sans-serif;
+  font-size: 65px;
+  margin: 30px 0;
+}
+
+//Footer
+.app-layout__footer {
+  width: 100%;
+  height: 125px;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  background-color: #0a0a1c;
+}
+
+.app-layout__footer ul {
+  justify-content: space-around;
+}

@@ -26,8 +26,8 @@ db.connect((err) => {
 });
 
 //Select
-app.get('/obras', (req, res) => {
-  let sql = 'select * from obras';
+app.get('/tareas', (req, res) => {
+  let sql = 'select * from tareas where idobra=1';
   db.query(sql, (err, result) => {
     if (err) throw err;
     res.send(result);
