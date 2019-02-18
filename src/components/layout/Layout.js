@@ -1,6 +1,6 @@
 import React from 'react';
 import { Icon } from 'antd';
-import Tareas from '../tareas/Tareas';
+import Tareas from '../tareas/TareasConnector';
 import '../../../node_modules/font-awesome/css/font-awesome.min.css';
 import './Layout.scss';
 
