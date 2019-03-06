@@ -1,32 +1,50 @@
 import axios from 'axios';
 import actionTypes from './TareasConstants';
 
-const loadTareasSuccess = tareas => dispatch => { dispatch({ type: actionTypes.LOAD_TAREAS, tareas }); };
+const baseURL = 'http://localhost:3000';
 
-const newTareasResult = result => dispatch => { dispatch({ type: actionTypes.NEW_TAREA, result }); };
+const fetchTareasSuccess = tareas => dispatch => { dispatch({ type: actionTypes.FETCH_TAREAS, tareas }); };
 
-const loadTareas = () => dispatch => {
-  axios.get('http://localhost:3000/tareas')
+const cleanQueryResult = () => dispatch => { dispatch({ type: actionTypes.CLEAN_RESULT_QUERY })}
+
+const queryTareasResult = queryResult => dispatch => { dispatch({ type: actionTypes.QUERY_TAREA_RESULT, queryResult }); };
+
+const fetchTareas = titulo => dispatch => {
+  dispatch(cleanQueryResult());
+  axios.get(`${baseURL}/tareas?titulo=${titulo}`)
     .then(res => {
-      dispatch(loadTareasSuccess(res.data));
+      dispatch(fetchTareasSuccess(res.data[0]));
     })
     .catch(e => {
-      throw(e);
+      console.log(e);
     });
 };
 
-const newTarea = (titulo, descripcion) => dispatch => {
-  axios.post('http://localhost:3000/tareas/newTarea',
+const createTarea = (titulo, descripcion) => dispatch => {
+  axios.post(`${baseURL}/tareas/create`,
     {
       titulo: titulo,
       descripcion: descripcion
     })
     .then(res => {
-      dispatch(newTareasResult(res.data[0].Mensaje));
+      dispatch(queryTareasResult(res.data[0][0].Mensaje));
     })
     .catch(e => {
       console.log(e);
     });
-}
+};
 
-export { loadTareas, newTarea };
+const deleteTarea = IdTarea => dispatch => {
+  axios.post(`${baseURL}/tareas/delete`,
+    {
+      IdTarea: IdTarea
+    })
+    .then(res => {
+      dispatch(queryTareasResult(res.data[0][0].Mensaje));
+    })
+    .catch(e => {
+      console.log(e);
+    });
+};
+
+export { fetchTareas, createTarea, deleteTarea };

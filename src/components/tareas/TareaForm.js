@@ -1,53 +1,93 @@
 import React, { Component } from 'react';
-import { Input } from 'antd';
+import { Input, DatePicker  } from 'antd';
 
 const { TextArea } = Input;
 
 class TareaForm extends Component {
   state = {
     titulo: '',
-    descripcion: ''
+    descripcion: '',
+    endDate: '',
+    initialDate: ''
   };
 
-  onChangeTitulo = event => {
+  onChangeTitulo = e => {
     this.setState({
-      titulo: event.target.value
+      titulo: e.target.value
     });
   }
 
-  onChangeDescripcion = event => {
+  onChangeDescripcion = e => {
     this.setState({
-      descripcion: event.target.value
+      descripcion: e.target.value
     });
   }
 
   handleSubmit = e => {
     e.preventDefault();
-    this.props.newTarea(this.state.titulo, this.state.descripcion);
+    this.props.createTarea(this.state.titulo, this.state.descripcion);
+    this.setState({
+      titulo: '',
+      descripcion: ''
+    });
+  }
+
+  onChangeDate = (date, dateString) => {
+    console.log(date, dateString);
   }
 
   render() {
     const { titulo, descripcion } = this.state;
+    const { isCreateForm } = this.props;
+    
     return (
-      <form className="tarea-form" onSubmit={this.handleSubmit}>
+      <form 
+        className="tarea-form" 
+        onSubmit={this.handleSubmit}>
+        { isCreateForm ? <h2>Nueva Tarea</h2> : <h2>Modificar Tarea</h2>}
         <p>Título</p>
-        <Input 
-          placeholder="Ingrese título"
+        <Input
+          required 
           value={titulo}
           onChange={this.onChangeTitulo}
         />
         <p>Descripción</p>
         <TextArea
-          placeholder="Ingrese descripción"
+          required
           value={descripcion}
           onChange={this.onChangeDescripcion} 
           rows={4}
         />
-        <p>*La tarea se dara de alta en Estado: Pendiente, Fecha Inicio: Actual y Fecha Fin: -</p>
-        <input type="submit" value="Submit"/>
+        {
+          isCreateForm 
+          ? <div className="tarea-form__notes">
+              <div>
+                <p>*La tarea se dara de alta con:</p> 
+              </div>
+              <div>
+                <span><b>Estado:</b> Pendiente</span>
+                <span><b>Fecha Inicio:</b> Actual</span>
+                <span><b>Fecha Fin:</b> Indeterminada(-)</span>
+              </div>
+              <input className="form-submit__button"type="submit" value="CREAR"/> 
+            </div>
+          : <div className="tarea-form__dates">
+              <p>Fecha Inicio</p>
+                <DatePicker 
+                  onChange={this.onChangeDate} 
+                  placeholder="Fecha inicio vieja"
+                />
+              <p>Fecha Fin</p>
+                < DatePicker 
+                  onChange={this.onChangeDate} 
+                  placeholder="Fecha fin vieja"
+                />
+              <input className="form-submit__button"type="submit" value="MODIFICAR"/> 
+            </div>
+        }
       </form>
     );
-}
+  }
 }
 
 export default TareaForm;

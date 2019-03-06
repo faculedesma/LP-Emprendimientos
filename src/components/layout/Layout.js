@@ -1,22 +1,50 @@
 import React from 'react';
-import { Icon } from 'antd';
+import { Drawer } from 'antd';
 import Tareas from '../tareas/TareasConnector';
 import '../../../node_modules/font-awesome/css/font-awesome.min.css';
 import './Layout.scss';
 
 class Layout extends React.Component {
+  state = {
+    visibleLeft: false,
+    visibleTop: false
+  };
+
+  showDrawer = () => {
+    this.setState({
+      visibleLeft: true,
+    });
+  };
+
+  onCloseDrawer= () => {
+    this.setState({
+      visibleLeft: false,
+    });
+  };
+
+  showTopDrawer = () => {
+    this.setState({
+      visibleTop: true,
+    });
+  };
+
+  onCloseTopDrawer= () => {
+    this.setState({
+      visibleTop: false,
+    });
+  };
 
   render() {
     return (
         <div className="app-layout">
           <div className="app-layout__header">
             <ul>
-              <li>
+              <li onClick={this.showDrawer}>
                 <div></div>
                 <div></div>
                 <div></div>
               </li>
-              <li><i className="fa fa-user-circle"/></li>
+              <li><i onClick={this.showTopDrawer} className="fa fa-user-circle"/></li>
             </ul>
           </div>
           <div className="app-layout__content">
@@ -38,6 +66,24 @@ class Layout extends React.Component {
                 </li>
             </ul>
           </div>
+          <Drawer
+            placement="left"
+            width="50%"
+            closable={false}
+            onClose={this.onCloseDrawer}
+            visible={this.state.visibleLeft}
+          >
+            
+          </Drawer>
+          <Drawer
+            placement="top"
+            height="40%"
+            closable={false}
+            onClose={this.onCloseTopDrawer}
+            visible={this.state.visibleTop}
+          >
+            
+          </Drawer>
         </div>
     );
   }

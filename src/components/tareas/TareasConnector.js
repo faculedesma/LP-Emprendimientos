@@ -1,15 +1,15 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { loadTareas, newTarea } from '../../redux/tareas/TareasActions';
+import { fetchTareas, createTarea, deleteTarea } from '../../redux/tareas/TareasActions';
 import Tareas from './Tareas';
 
 const mapDispatchToProps = dispatch => ({
-  tareasActions: bindActionCreators( { loadTareas, newTarea }, dispatch)
+  tareasActions: bindActionCreators( { fetchTareas, createTarea, deleteTarea }, dispatch)
 });
 
 const mapStateToProps = state => ({
   tareas: state.tareas.tareas,
-  result: state.tareas.result
+  queryResult: state.tareas.queryResult
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Tareas);

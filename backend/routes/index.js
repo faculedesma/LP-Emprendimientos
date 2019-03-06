@@ -9,12 +9,7 @@ router.get('/', function (req, res, next) {
 
 /*API Tareas*/
 router.get('/tareas', tareasController.listTareas);
-router.post('/tareas/newTarea', function (req, res) {
-  tarea = {
-    titulo: req.param('titulo'),
-    descripcion: req.param('descripcion')
-  }
-  tareasController.newTarea(tarea);
-});
+router.post('/tareas/create', tareasController.newTarea);
+router.post('/tareas/delete', tareasController.deleteTarea);
 
 module.exports = router;

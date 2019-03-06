@@ -1,36 +1,97 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types'; 
 import TareaHeader from './TareaHeader';
-import TareaData from './TareaData';
+import TareaContent from './TareaContent';
 import TareaForm from './TareaForm'; 
-import CustomModal from '../common/customModal/CustomModal';
-import { Collapse, Progress, Spin, Icon } from 'antd';
+import { Collapse, Progress, Icon, Drawer, BackTop, Input, notification } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faSearch, faRedo } from '@fortawesome/free-solid-svg-icons';
 import './Tareas.scss';
 
 const Panel = Collapse.Panel;
-const antIcon = <Icon type="loading" style={{ fontSize: 24 }} spin />;
 
 class Tareas extends Component {
   state = {
-    loading: true
+    loading: true,
+    visible: false,
+    tareas: [],
+    search: '',
+    queryResult: '',
+    isCreateForm: true
   };
 
   componentDidMount() {
-    this.props.tareasActions.loadTareas();
-    this.setState({
-      loading: false
-    });
+    this.props.tareasActions.fetchTareas('');
   };
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.result != nextProps.result) {
-      nextProps.tareasActions.loadTareas();
+    if(this.props.tareas !== nextProps.tareas) {
+      this.setState({
+        loading: false,
+        tareas: nextProps.tareas
+      });
+    }
+
+    if (!this.props.queryResult && nextProps.queryResult) {
+      this.props.tareasActions.fetchTareas('');
+      this.setState({
+        queryResult: nextProps.queryResult
+      }, () => {
+        this.state.queryResult.substring(0,2) !== 'OK'
+          ? notification.error({ description: this.state.queryResult, placement: "bottomRight" })
+          : notification.success({ description: this.state.queryResult, placement: "bottomRight" })
+      });
     }
   };
 
-  newTarea = (titulo, descripcion) => {
-    this.props.tareasActions.newTarea(titulo, descripcion);
+  createTarea = (titulo, descripcion) => {
+    this.props.tareasActions.createTarea(titulo, descripcion);
+    this.onCloseDrawer();
+  };
+
+  deleteTarea = IdTarea => {
+    this.props.tareasActions.deleteTarea(IdTarea);
+  };
+
+  updateTarea = (titulo, descripcion) => {
+    this.props.tareasActions.createTarea(titulo, descripcion);
+    this.onCloseDrawer();
+  };
+
+  refreshTareas = () => {
+    this.props.tareasActions.fetchTareas('');
+  };
+  
+  handleSearch = () => {
+    this.props.tareasActions.fetchTareas(this.state.search);
+  };
+
+  handleSearchField = e => {
+    this.setState({
+      search: e.target.value
+    }, () => {
+      this.props.tareasActions.fetchTareas(this.state.search);
+    });
+  };
+
+  showDrawerCreate = () => {
+    this.setState({
+      isCreateForm: true,
+      visible: true
+    });
+  };
+
+  showDrawerUpdate = () => {
+    this.setState({
+      isCreateForm: false,
+      visible: true
+    });
+  };
+
+  onCloseDrawer= () => {
+    this.setState({
+      visible: false,
+    });
   };
 
   calculatePercentage = () => {
@@ -38,60 +99,96 @@ class Tareas extends Component {
     let totalCount = 0;
     this.props.tareas.filter(tarea => {
       totalCount += 1;
-      if (tarea.Estado === "T") finishCount += 1;
+      tarea.Estado === "T" ? finishCount += 1 : null;
     });
-    return (finishCount / totalCount) * 100;
+    return Math.trunc((finishCount / totalCount) * 100);
   };
 
   render() {
-    const {
-      tareas
-    } = this.props;
-
     return (
       <div className="tareas-container">
         <div className="tareas-container__header">
-          <h1>Tareas</h1>
+          <div>
+            <h1>Tareas</h1>
+          </div>
+          <div className="tareas-container__header__actions">
+            <button onClick={this.refreshTareas}>
+              <FontAwesomeIcon icon={faRedo} className="icon-plus" />
+            </button>
+            <button onClick={this.showDrawerCreate}>
+              <FontAwesomeIcon icon={faPlus} className="icon-plus" />
+            </button>
+          </div>
+        </div>
+        <div className="tareas-container__searchbar">
           <button>
-            <FontAwesomeIcon icon={faPlus} className="icon-plus" />
+            <FontAwesomeIcon 
+              icon={faSearch} 
+              className="icon-plus" 
+              onClick={this.handleSearch}
+            />
           </button>
+          <Input
+            value={this.state.search}
+            placeholder="Filtrar"
+            onChange={this.handleSearchField}
+          />
         </div>
         {
           this.state.loading
-            ? <Spin indicator={antIcon} />
+            ? <Icon type="loading" className="spinner"/>
             :
             <Collapse className="tareas-container__table">
               {
-                tareas.map(tarea => {
+                this.state.tareas.map(tarea => {
                   return (
                     <Panel
                       showArrow={false}
-                      header={<TareaHeader tarea={tarea} />}
+                      header={
+                        <TareaHeader 
+                          tarea={tarea} 
+                          deleteTarea={this.deleteTarea}
+                          showDrawerUpdate={this.showDrawerUpdate} 
+                        />}
                       key={tarea.IdTarea}
                     >
-                      <TareaData tarea={tarea} />
+                      <TareaContent tarea={tarea} />
                     </Panel>
                   )
                 })
               }
             </Collapse>
         }
-        {/* <div className="tareas-container__stadistics">
+        <div className="tareas-container__stadistics">
           <p>Porcentaje tareas realizadas:</p>
           <Progress
             type="dashboard"
-            percent={this.calculatePercentage()} />
-        </div> */}
-        <TareaForm 
-          newTarea={this.newTarea}
-        />
-        {/* <CustomModal
-          title="Nueva Tarea"
-          content={<TareaForm />}
-        /> */}
+            percent={this.calculatePercentage()} 
+          />
+        </div>
+        <Drawer
+          placement="right"
+          width="100%"
+          className="form-drawer"
+          closable={true}
+          onClose={this.onCloseDrawer}
+          visible={this.state.visible}
+        >
+          <TareaForm 
+            isCreateForm={this.state.isCreateForm} 
+            createTarea={this.createTarea}
+            updateTarea={this.updateTarea}
+          />
+        </Drawer>
+        <BackTop className="backtop"/>
       </div>
     );
   }
 }
+
+Tareas.propTypes = {
+  fetchTareas: PropTypes.func,
+  percent: PropTypes.string
+};
 
 export default Tareas;

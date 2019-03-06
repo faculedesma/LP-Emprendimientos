@@ -2,16 +2,19 @@ import actionTypes from './TareasConstants';
 
 const initialStore = {
   tareas: [],
-  result: ''
+  queryResult: ''
 };
 
 export default function tareasReducer(state = initialStore, action) {
   switch(action.type) {
-    case actionTypes.LOAD_TAREAS:
-      return { ...state, tareas: action.tareas, result: '' };
+    case actionTypes.FETCH_TAREAS:
+      return { ...state, tareas: action.tareas };
 
-    case actionTypes.NEW_TAREA:
-      return { ...state, result: action.result };
+    case actionTypes.QUERY_TAREA_RESULT:
+      return { ...state, queryResult: action.queryResult };
+    
+    case actionTypes.CLEAN_RESULT_QUERY:
+      return { ...initialStore };
 
     default:
       return state;
