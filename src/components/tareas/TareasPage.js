@@ -1,14 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types'; 
-import TareaHeader from './TareaHeader';
-import TareaContent from './TareaContent';
-import TareaForm from './TareaForm'; 
-import { Collapse, Progress, Icon, Drawer, BackTop, Input, notification } from 'antd';
+import TareaForm from './TareaForm';
+import Table from '../common/table/Table';
+import { Progress, Icon, Drawer, BackTop, Input, notification } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faSearch, faRedo } from '@fortawesome/free-solid-svg-icons';
 import './Tareas.scss';
-
-const Panel = Collapse.Panel;
 
 class Tareas extends Component {
   state = {
@@ -23,6 +20,28 @@ class Tareas extends Component {
   componentDidMount() {
     this.props.tareasActions.fetchTareas('');
   };
+
+  // static getDerivedStateFromProps(nextProps, prevState) {
+  //   if(prevState.tareas !== nextProps.tareas) {
+  //     return {
+  //       loading: false,
+  //       tareas: nextProps.tareas
+  //     };
+  //   }
+
+  //   if (!prevState.queryResult && nextProps.queryResult) {
+  //     //this.props.tareasActions.fetchTareas('');
+  //     return {
+  //       queryResult: nextProps.queryResult
+  //     }, () => {
+  //       this.state.queryResult.substring(0,2) !== 'OK'
+  //         ? notification.error({ description: this.state.queryResult, placement: "bottomRight" })
+  //         : notification.success({ description: this.state.queryResult, placement: "bottomRight" })
+  //     };
+  //   }
+
+  //   return null;
+  // };
 
   componentWillReceiveProps(nextProps) {
     if(this.props.tareas !== nextProps.tareas) {
@@ -134,31 +153,16 @@ class Tareas extends Component {
             onChange={this.handleSearchField}
           />
         </div>
-        {
-          this.state.loading
-            ? <Icon type="loading" className="spinner"/>
-            :
-            <Collapse className="tareas-container__table">
-              {
-                this.state.tareas.map(tarea => {
-                  return (
-                    <Panel
-                      showArrow={false}
-                      header={
-                        <TareaHeader 
-                          tarea={tarea} 
-                          deleteTarea={this.deleteTarea}
-                          showDrawerUpdate={this.showDrawerUpdate} 
-                        />}
-                      key={tarea.IdTarea}
-                    >
-                      <TareaContent tarea={tarea} />
-                    </Panel>
-                  )
-                })
-              }
-            </Collapse>
-        }
+          {
+            this.state.loading
+              ? <Icon type="loading" className="spinner"/>
+                :
+                  <Table 
+                    content={this.state.tareas} 
+                    tableType={this.props.tableType}
+                    openUpdateDrawer={this.showDrawerUpdate}
+                  />
+          }
         <div className="tareas-container__stadistics">
           <p>Porcentaje tareas realizadas:</p>
           <Progress

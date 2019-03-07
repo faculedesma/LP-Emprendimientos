@@ -4,6 +4,12 @@ import Tareas from '../tareas/TareasConnector';
 import '../../../node_modules/font-awesome/css/font-awesome.min.css';
 import './Layout.scss';
 
+const tableType = {
+  TAREAS: 'TAREAS',
+  REUNIONES: 'REUNIONES',
+  MATERIALES: 'MATERIALES'
+};
+
 class Layout extends React.Component {
   state = {
     visibleLeft: false,
@@ -51,7 +57,7 @@ class Layout extends React.Component {
             <div className="app-layout__content__title">
               <p>CHACABUCO 465</p>
             </div>
-            <Tareas />
+            <Tareas tableType={tableType.TAREAS} />
           </div>
           <div className="app-layout__footer">
             <ul>

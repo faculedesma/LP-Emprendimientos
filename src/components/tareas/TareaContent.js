@@ -1,61 +1,33 @@
-import React from 'react';
-import { Upload, Button, Icon } from 'antd';
+import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClock, faCheck } from '@fortawesome/free-solid-svg-icons';
+import Images from '../common/images/ImagesConnector';
 
-const fileList = [{
-  uid: '-1',
-  name: 'xxx.png',
-  status: 'done',
-  url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-  thumbUrl: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-}, {
-  uid: '-2',
-  name: 'yyy.png',
-  status: 'done',
-  url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-  thumbUrl: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-}];
-
-const props = {
-  action: '//jsonplaceholder.typicode.com/posts/',
-  listType: 'picture',
-  defaultFileList: [...fileList],
-};
-
-const props2 = {
-  action: '//jsonplaceholder.typicode.com/posts/',
-  listType: 'picture',
-  defaultFileList: [...fileList],
-  className: 'upload-list-inline',
-};
-
-
-const TareaContent = ({ tarea }) => {
-  return (
-    <div>
-      <div className="tareas-container__table__data">
-        <p>Descripción: {tarea.Descripcion}</p>
-        <p>Fecha Inicio: {tarea.FechaInicio.substring(0,10)}</p>
-        <p>Fecha Fin: {tarea.FechaFin === null ? '-' : tarea.FechaFin.substring(0,10)}</p>
-        <p>Creada por: {tarea.UsuarioCreacion}</p>
-        <p>Estado:
-                        {tarea.Estado === "T"
-            ? <FontAwesomeIcon icon={faCheck} className="icon-finish" />
-            : <FontAwesomeIcon icon={faClock} className="icon-pending" />
-          }
-        </p>
+class TareaContent extends Component {
+  render() {
+    const { tarea } = this.props;
+    return (
+      <div>
+        <div className="tareas-container__table__data">
+          <p>Descripción: {tarea.Descripcion}</p>
+          <p>Fecha Inicio: {tarea.FechaInicio.substring(0,10)}</p>
+          <p>Fecha Fin: {!tarea.FechaFin ? '-' : tarea.FechaFin.substring(0,10)}</p>
+          <p>Creada por: {tarea.UsuarioCreacion}</p>
+          <p>Estado:
+                          {tarea.Estado === "T"
+              ? <FontAwesomeIcon icon={faCheck} className="icon-finish" />
+              : <FontAwesomeIcon icon={faClock} className="icon-pending" />
+            }
+          </p>
+        </div>
+        <div className="tareas-container__table__images">
+          <input type="file" onChange={this.fileSelectedHandler} />
+          <button onClick={this.fileUploadHandler}>Upload</button>
+          <Images IdTarea={tarea.IdTarea}/>
+        </div>
       </div>
-      <div className="tareas-container__table__images">
-        <p>Imágenes:</p>
-        <Upload {...props}>
-          <Button>
-            <Icon type="upload" /> Upload
-          </Button>
-        </Upload>
-      </div>
-    </div>
-  );
+    );
+  }
 }
 
 export default TareaContent;

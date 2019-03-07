@@ -20,6 +20,16 @@ const fetchTareas = titulo => dispatch => {
     });
 };
 
+const fetchImagesTarea = IdTarea => dispatch => {
+  axios.get(`${baseURL}/tareas?IdTarea=${IdTarea}`)
+    .then(res => {
+      dispatch(fetchImagesTarea(res.data[0]));
+    })
+    .catch(e => {
+      console.log(e);
+    });
+};
+
 const createTarea = (titulo, descripcion) => dispatch => {
   axios.post(`${baseURL}/tareas/create`,
     {
@@ -47,4 +57,4 @@ const deleteTarea = IdTarea => dispatch => {
     });
 };
 
-export { fetchTareas, createTarea, deleteTarea };
+export { fetchTareas, fetchImagesTarea, createTarea, deleteTarea };
