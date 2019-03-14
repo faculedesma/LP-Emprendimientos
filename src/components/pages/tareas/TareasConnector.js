@@ -1,10 +1,19 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { fetchTareas, createTarea, deleteTarea } from '../../redux/tareas/TareasActions';
+import { 
+  fetchTareas, 
+  createTarea, 
+  deleteTarea, 
+  updateTarea,
+  finishTarea,
+  unfinishTarea  
+} from '../../../redux/tareas/TareasActions';
 import TareasPage from './TareasPage';
 
 const mapDispatchToProps = dispatch => ({
-  tareasActions: bindActionCreators( { fetchTareas, createTarea, deleteTarea }, dispatch)
+  tareasActions: bindActionCreators( { 
+    fetchTareas, createTarea, deleteTarea, updateTarea, finishTarea, unfinishTarea 
+  }, dispatch)
 });
 
 const mapStateToProps = state => ({

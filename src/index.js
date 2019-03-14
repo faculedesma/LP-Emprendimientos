@@ -5,7 +5,6 @@ import { render } from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
 import configureStore, { history } from './redux/configureStore';
 import Root from './components/Root';
-//import '../../../node_modules/font-awesome/font-awesome.min.css';
 const store = configureStore();
 
 render(

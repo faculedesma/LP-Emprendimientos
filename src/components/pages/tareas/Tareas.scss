@@ -1,51 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat');
 
-.spinner {
-  margin: 150px;
-}
-
-.spinner svg {
-  color: #0a0a1c;
-  font-size: 100px;
-}
-
-.icon-normal {
-  font-size: 35px !important;
-  color: #0a0a1c !important;
-}
-
-.icon-finish {
-  font-size: 35px !important;
-  color: green !important;
-}
-
-.icon-pending {
-  font-size: 35px !important;
-  color: gray !important;
-}
-
-.icon-actions {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-}
-
-.icon-actions svg {
-  margin: 20px;
-}
-
-.form-submit__button {
-  background-color: #0a0a1c;
-  color: white;
-}
-
-.ant-drawer-close-x svg {
-  margin-top: 25px;
-  margin-right: 25px;
-  color: #0a0a1c;
-}
-
 .tareas-container {
   width: 100%;
   display: flex;
@@ -117,58 +71,6 @@
   background: none;
   border: none;
   align-self: flex-start;
-}
-
-.tareas-container__table {
-  width: 100%;
-  margin: 50px 0 100px;
-}
-
-.tareas-container__table > div {
-  margin-bottom: 0;
-}
-
-.tareas-container__table__header {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-}
-
-.tareas-container__table__header {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.tareas-container__table__header p {
-  margin: 0;
-  align-self: flex-start;
-}
-.tareas-container__table__header svg {
-  margin-right: 40px;
-  align-self: flex-end;
-}
-
-.tareas-container__table__data svg {
-  margin-left: 20px;
-}
-
-.ant-collapse {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 30px;
-}
-
-.ant-collapse-item {
-  margin: 20px 0;
-}
-
-.ant-collapse-header {
-  padding: 0 !important;
-  margin-top: 40px !important;
-  margin-bottom: 40px;
-  margin-left: 40px;
 }
 
 .tareas-container__stadistics {

@@ -4,57 +4,88 @@ import { Input, DatePicker  } from 'antd';
 const { TextArea } = Input;
 
 class TareaForm extends Component {
-  state = {
-    titulo: '',
-    descripcion: '',
-    endDate: '',
-    initialDate: ''
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      Titulo: props.isCreateForm ? '' : props.tarea.Titulo,
+      Descripcion: props.isCreateForm ? '' : props.tarea.Descripcion,
+      FechaInicio: props.isCreateForm ? '' : props.tarea.FechaInicio,
+      FechaFin: props.isCreateForm ? '' : props.tarea.FechaFin
+    };
+  }
 
   onChangeTitulo = e => {
     this.setState({
-      titulo: e.target.value
+      Titulo: e.target.value
     });
   }
 
   onChangeDescripcion = e => {
     this.setState({
-      descripcion: e.target.value
+      Descripcion: e.target.value
     });
   }
-
-  handleSubmit = e => {
-    e.preventDefault();
-    this.props.createTarea(this.state.titulo, this.state.descripcion);
+  
+  onChangeInitialDate = (date, dateString) => {
     this.setState({
-      titulo: '',
-      descripcion: ''
+      FechaInicio: dateString
     });
   }
 
-  onChangeDate = (date, dateString) => {
-    console.log(date, dateString);
+  onChangeEndDate = (date, dateString) => {
+    this.setState({
+      FechaFin: dateString
+    });
   }
+
+  handleSubmitCreate = e => {
+    e.preventDefault();
+    this.props.createTarea(this.state.Titulo, this.state.Descripcion);
+    this.setState({
+      Titulo: '',
+      Descripcion: ''
+    });
+  }
+
+  handleSubmitUpdate = e => {
+    e.preventDefault();
+    const tarea = {
+      IdTarea: this.props.tarea.IdTarea,
+      Titulo: this.state.Titulo,
+      Descripcion: this.state.Descripcion,
+      FechaInicio: this.state.FechaInicio,
+      FechaFin: this.state.FechaFin
+    };
+    this.props.updateTarea(tarea);
+    this.setState({
+      Titulo: '',
+      Descripcion: '',
+      FechaInicio: '',
+      FechaFin: ''
+    });
+    this.props.onCloseDrawer();
+  }
+
 
   render() {
-    const { titulo, descripcion } = this.state;
+    const { Titulo, Descripcion, FechaInicio, FechaFin } = this.state;
     const { isCreateForm } = this.props;
-    
+
     return (
       <form 
         className="tarea-form" 
-        onSubmit={this.handleSubmit}>
+        onSubmit={isCreateForm ? this.handleSubmitCreate : this.handleSubmitUpdate}>
         { isCreateForm ? <h2>Nueva Tarea</h2> : <h2>Modificar Tarea</h2>}
         <p>Título</p>
         <Input
           required 
-          value={titulo}
+          value={Titulo}
           onChange={this.onChangeTitulo}
         />
         <p>Descripción</p>
         <TextArea
           required
-          value={descripcion}
+          value={Descripcion}
           onChange={this.onChangeDescripcion} 
           rows={4}
         />
@@ -74,13 +105,13 @@ class TareaForm extends Component {
           : <div className="tarea-form__dates">
               <p>Fecha Inicio</p>
                 <DatePicker 
-                  onChange={this.onChangeDate} 
-                  placeholder="Fecha inicio vieja"
+                  onChange={this.onChangeInitialDate}
+                  placeholder={FechaInicio}
                 />
               <p>Fecha Fin</p>
                 < DatePicker 
-                  onChange={this.onChangeDate} 
-                  placeholder="Fecha fin vieja"
+                  onChange={this.onChangeEndDate}
+                  placeholder={FechaFin}
                 />
               <input className="form-submit__button"type="submit" value="MODIFICAR"/> 
             </div>

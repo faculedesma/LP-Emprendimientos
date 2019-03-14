@@ -1,7 +1,6 @@
 var express = require('express');
 var router = express.Router();
 var tareasController = require('../controllers/TareasController');
-var imagesController = require('../controllers/ImagesController');
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
@@ -12,8 +11,9 @@ router.get('/', function (req, res, next) {
 router.get('/tareas', tareasController.listTareas);
 router.post('/tareas/create', tareasController.newTarea);
 router.post('/tareas/delete', tareasController.deleteTarea);
-
-router.get('/tareas/images', imagesController.fetchImagesPaths);
+router.post('/tareas/update', tareasController.updateTarea);
+router.post('/tareas/finish', tareasController.finishTarea);
+router.post('/tareas/unfinish', tareasController.unfinishTarea);
 
 
 module.exports = router;

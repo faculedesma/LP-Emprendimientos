@@ -1,9 +1,9 @@
 import axios from 'axios';
 import actionTypes from './TareasConstants';
 
-const baseURL = 'http://localhost:3000';
+const baseURL = 'http://192.168.0.15:3000';
 
-const fetchTareasSuccess = tareas => dispatch => { dispatch({ type: actionTypes.FETCH_TAREAS, tareas }); };
+const fetchTareasSuccess = tareas => dispatch => { dispatch({ type: actionTypes.FETCH_TAREAS_SUCCESS, tareas }); };
 
 const cleanQueryResult = () => dispatch => { dispatch({ type: actionTypes.CLEAN_RESULT_QUERY })}
 
@@ -57,4 +57,43 @@ const deleteTarea = IdTarea => dispatch => {
     });
 };
 
-export { fetchTareas, fetchImagesTarea, createTarea, deleteTarea };
+const updateTarea = tarea => dispatch => {
+  axios.post(`${baseURL}/tareas/update`,
+    {
+      tarea: tarea
+    })
+    .then(res => {
+      dispatch(queryTareasResult(res.data[0][0].Mensaje));
+    })
+    .catch(e => {
+      console.log(e);
+    });
+};
+
+const finishTarea = IdTarea => dispatch => {
+  axios.post(`${baseURL}/tareas/finish`,
+    {
+      IdTarea: IdTarea
+    })
+    .then(res => {
+      dispatch(queryTareasResult(res.data[0][0].Mensaje));
+    })
+    .catch(e => {
+      console.log(e);
+    });
+};
+
+const unfinishTarea = IdTarea => dispatch => {
+  axios.post(`${baseURL}/tareas/unfinish`,
+    {
+      IdTarea: IdTarea
+    })
+    .then(res => {
+      dispatch(queryTareasResult(res.data[0][0].Mensaje));
+    })
+    .catch(e => {
+      console.log(e);
+    });
+};
+
+export { fetchTareas, fetchImagesTarea, createTarea, deleteTarea, updateTarea, finishTarea, unfinishTarea };

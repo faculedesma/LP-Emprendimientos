@@ -1,6 +1,6 @@
 import React from 'react';
 import { Drawer } from 'antd';
-import Tareas from '../tareas/TareasConnector';
+import Tareas from '../pages/tareas/TareasConnector';
 import '../../../node_modules/font-awesome/css/font-awesome.min.css';
 import './Layout.scss';
 

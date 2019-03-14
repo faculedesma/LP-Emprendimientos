@@ -1,89 +1,65 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types'; 
 import TareaForm from './TareaForm';
-import Table from '../common/table/Table';
+import Table from '../../common/table/Table';
 import { Progress, Icon, Drawer, BackTop, Input, notification } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus, faSearch, faRedo } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faSearch } from '@fortawesome/free-solid-svg-icons';
 import './Tareas.scss';
 
 class Tareas extends Component {
   state = {
-    loading: true,
-    visible: false,
     tareas: [],
     search: '',
     queryResult: '',
-    isCreateForm: true
+    isLoading: true,
+    isVisible: false,
+    isCreateForm: false
   };
 
   componentDidMount() {
     this.props.tareasActions.fetchTareas('');
   };
 
-  // static getDerivedStateFromProps(nextProps, prevState) {
-  //   if(prevState.tareas !== nextProps.tareas) {
-  //     return {
-  //       loading: false,
-  //       tareas: nextProps.tareas
-  //     };
-  //   }
-
-  //   if (!prevState.queryResult && nextProps.queryResult) {
-  //     //this.props.tareasActions.fetchTareas('');
-  //     return {
-  //       queryResult: nextProps.queryResult
-  //     }, () => {
-  //       this.state.queryResult.substring(0,2) !== 'OK'
-  //         ? notification.error({ description: this.state.queryResult, placement: "bottomRight" })
-  //         : notification.success({ description: this.state.queryResult, placement: "bottomRight" })
-  //     };
-  //   }
-
-  //   return null;
-  // };
-
-  componentWillReceiveProps(nextProps) {
-    if(this.props.tareas !== nextProps.tareas) {
-      this.setState({
-        loading: false,
-        tareas: nextProps.tareas
-      });
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if(prevState.tareas !== nextProps.tareas) {
+      return {
+        isLoading: false,
+        tareas: nextProps.tareas,
+        queryResult: ''
+      };
     }
 
-    if (!this.props.queryResult && nextProps.queryResult) {
-      this.props.tareasActions.fetchTareas('');
-      this.setState({
+    if (!prevState.queryResult && nextProps.queryResult) {
+      return {
         queryResult: nextProps.queryResult
-      }, () => {
-        this.state.queryResult.substring(0,2) !== 'OK'
-          ? notification.error({ description: this.state.queryResult, placement: "bottomRight" })
-          : notification.success({ description: this.state.queryResult, placement: "bottomRight" })
-      });
+      };
+    }
+
+    return null;
+  };
+
+  componentDidUpdate(prevProps, prevState) {
+    if (!prevState.queryResult && this.state.queryResult){
+      prevProps.tareasActions.fetchTareas('');
+      this.showNotification();
     }
   };
 
-  createTarea = (titulo, descripcion) => {
-    this.props.tareasActions.createTarea(titulo, descripcion);
+  createTarea = (Titulo, Descripcion) => {
+    this.props.tareasActions.createTarea(Titulo, Descripcion);
     this.onCloseDrawer();
   };
 
-  deleteTarea = IdTarea => {
-    this.props.tareasActions.deleteTarea(IdTarea);
-  };
+  deleteTarea = IdTarea => this.props.tareasActions.deleteTarea(IdTarea);
 
-  updateTarea = (titulo, descripcion) => {
-    this.props.tareasActions.createTarea(titulo, descripcion);
-    this.onCloseDrawer();
-  };
+  updateTarea = tarea => this.props.tareasActions.updateTarea(tarea);
 
-  refreshTareas = () => {
-    this.props.tareasActions.fetchTareas('');
-  };
+  unfinishTarea = IdTarea => this.props.tareasActions.unfinishTarea(IdTarea);
+
+  finishTarea = IdTarea => this.props.tareasActions.finishTarea(IdTarea);
   
-  handleSearch = () => {
-    this.props.tareasActions.fetchTareas(this.state.search);
-  };
+  handleSearch = () => this.props.tareasActions.fetchTareas(this.state.search);
 
   handleSearchField = e => {
     this.setState({
@@ -93,23 +69,23 @@ class Tareas extends Component {
     });
   };
 
+  showNotification = () => {
+    this.state.queryResult.substring(0,2) !== 'OK'
+    ? notification.error({ description: this.state.queryResult, placement: "bottomRight" })
+    : notification.success({ description: this.state.queryResult, placement: "bottomRight" })
+  };
+
   showDrawerCreate = () => {
     this.setState({
       isCreateForm: true,
-      visible: true
-    });
-  };
-
-  showDrawerUpdate = () => {
-    this.setState({
-      isCreateForm: false,
-      visible: true
+      isVisible: true
     });
   };
 
   onCloseDrawer= () => {
     this.setState({
-      visible: false,
+      isVisible: false,
+      isCreateForm: false
     });
   };
 
@@ -131,9 +107,6 @@ class Tareas extends Component {
             <h1>Tareas</h1>
           </div>
           <div className="tareas-container__header__actions">
-            <button onClick={this.refreshTareas}>
-              <FontAwesomeIcon icon={faRedo} className="icon-plus" />
-            </button>
             <button onClick={this.showDrawerCreate}>
               <FontAwesomeIcon icon={faPlus} className="icon-plus" />
             </button>
@@ -154,13 +127,18 @@ class Tareas extends Component {
           />
         </div>
           {
-            this.state.loading
+            this.state.isLoading
               ? <Icon type="loading" className="spinner"/>
                 :
                   <Table 
                     content={this.state.tareas} 
                     tableType={this.props.tableType}
                     openUpdateDrawer={this.showDrawerUpdate}
+                    updateTarea={this.updateTarea}
+                    deleteTarea={this.deleteTarea}
+                    finishTarea={this.finishTarea}
+                    unfinishTarea={this.unfinishTarea}
+                    isCreateForm={this.state.isCreateForm}
                   />
           }
         <div className="tareas-container__stadistics">
@@ -176,12 +154,11 @@ class Tareas extends Component {
           className="form-drawer"
           closable={true}
           onClose={this.onCloseDrawer}
-          visible={this.state.visible}
+          visible={this.state.isVisible}
         >
           <TareaForm 
             isCreateForm={this.state.isCreateForm} 
             createTarea={this.createTarea}
-            updateTarea={this.updateTarea}
           />
         </Drawer>
         <BackTop className="backtop"/>

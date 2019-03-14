@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Popover, Popconfirm } from  'antd';
+import TareaForm from '../../pages/tareas/TareaForm';
+import { Popover, Popconfirm, Drawer } from  'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
   faPencilAlt, 
@@ -14,7 +15,8 @@ import './Table.scss';
 
 class TableRow extends Component {
   state = {
-    expandRow: false
+    expandRow: false,
+    isVisible: false
   };
   
   onRowClick = () => {
@@ -22,22 +24,38 @@ class TableRow extends Component {
       expandRow: !this.state.expandRow
     });
   };
+
+  showDrawerUpdate = () => {
+    this.setState({
+      isVisible: true
+    });
+  };
+
+  onCloseDrawer= () => {
+    this.setState({
+      isVisible: false,
+    });
+  };
   
   render() {
     const {
       tableType,
-      openUpdateDrawer,
-      row
+      row,
+      handleDeleteTarea,
+      handleUpdateTarea,
+      finishTarea,
+      unfinishTarea,
+      isCreateForm
     } = this.props;
     
     const actions = (
       <div className="icon-actions">
-        <button onClick={openUpdateDrawer}>
+        <button onClick={this.showDrawerUpdate}>
           <FontAwesomeIcon icon={faPencilAlt} className="icon-normal" />
         </button>
         <Popconfirm 
           title="Esta seguro de que desea eliminar la tarea?" 
-          onConfirm={null}
+          onConfirm={() => handleDeleteTarea(row.IdTarea)}
           okText="SI" 
           cancelText="NO"
         >
@@ -46,9 +64,9 @@ class TableRow extends Component {
           </button>
         </Popconfirm>
         {
-          row.Estado === "T"
-            ? <FontAwesomeIcon icon={faToggleOff} className="icon-normal" />
-              : <FontAwesomeIcon icon={faToggleOn} className="icon-normal" />
+          row.Estado === "P"
+            ? <FontAwesomeIcon onClick={() => finishTarea(row.IdTarea)}icon={faCheck} className="icon-normal" />
+            : <FontAwesomeIcon onClick={() => unfinishTarea(row.IdTarea)} icon={faClock} className="icon-normal" />
         }
       </div>
     );
@@ -83,6 +101,21 @@ class TableRow extends Component {
           <button onClick={this.fileUploadHandler}>Upload</button>
           <Images IdTarea={tarea.IdTarea}/> */}
         </div>
+        <Drawer
+          placement="right"
+          width="100%"
+          className="form-drawer"
+          closable={true}
+          onClose={this.onCloseDrawer}
+          visible={this.state.isVisible}
+        >
+          <TareaForm 
+            isCreateForm={isCreateForm}
+            updateTarea={handleUpdateTarea}
+            onCloseDrawer={this.onCloseDrawer}
+            tarea={row}
+          />
+        </Drawer>
       </div>
     );
   }

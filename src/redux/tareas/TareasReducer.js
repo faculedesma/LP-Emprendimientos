@@ -7,7 +7,7 @@ const initialStore = {
 
 export default function tareasReducer(state = initialStore, action) {
   switch(action.type) {
-    case actionTypes.FETCH_TAREAS:
+    case actionTypes.FETCH_TAREAS_SUCCESS:
       return { ...state, tareas: action.tareas };
 
     case actionTypes.QUERY_TAREA_RESULT:

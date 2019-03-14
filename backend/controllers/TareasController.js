@@ -30,7 +30,46 @@ exports.deleteTarea = function (req, res) {
   
   manageTareas.deleteTarea(IdTarea)
     .then(function (result) {
-      console.log(result)
+      res.send(result);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+};
+
+exports.updateTarea = function (req, res) {
+  const IdTarea = req.body.tarea.IdTarea;
+  const Titulo = req.body.tarea.Titulo;
+  const Descripcion = req.body.tarea.Descripcion;
+  const FechaInicio = req.body.tarea.FechaInicio;
+  const FechaFin = req.body.tarea.FechaFin;
+
+  manageTareas.updateTarea(IdTarea, Titulo, Descripcion, FechaInicio, FechaFin)
+    .then(function (result) {
+      res.send(result);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+};
+
+exports.finishTarea = function (req, res) {
+  const IdTarea = req.body.IdTarea;
+  
+  manageTareas.finishTarea(IdTarea)
+    .then(function (result) {
+      res.send(result);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+};
+
+exports.unfinishTarea = function (req, res) {
+  const IdTarea = req.body.IdTarea;
+  
+  manageTareas.unfinishTarea(IdTarea)
+    .then(function (result) {
       res.send(result);
     })
     .catch(function (error) {

@@ -1,8 +1,0 @@
-const actionTypes = {
-  FETCH_IMAGES_PATHS: 'FETCH_IMAGES_PATHS',
-  CLEAN_IMAGES_PATHS: 'CLEAN_IMAGES_PATHS',
-  SAVE_IMAGE_PATH: 'SAVE_IMAGE_PATH',
-  DELETE_IMAGE: 'DELETE_IMAGE' 
-};
-
-export default actionTypes;
