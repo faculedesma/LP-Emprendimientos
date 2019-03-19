@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types'; 
+import Layout from '../../layout/Layout';
 import TareaForm from './TareaForm';
 import Table from '../../common/table/Table';
 import { Progress, Icon, Drawer, BackTop, Input, notification } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faSearch } from '@fortawesome/free-solid-svg-icons';
-import './Tareas.scss';
+import './TareasPage.scss';
 
 class Tareas extends Component {
   state = {
@@ -58,6 +59,8 @@ class Tareas extends Component {
   unfinishTarea = IdTarea => this.props.tareasActions.unfinishTarea(IdTarea);
 
   finishTarea = IdTarea => this.props.tareasActions.finishTarea(IdTarea);
+
+  fetchImagesTarea = IdTarea => this.props.tareasActions.fetchImagesTarea(IdTarea);
   
   handleSearch = () => this.props.tareasActions.fetchTareas(this.state.search);
 
@@ -101,68 +104,71 @@ class Tareas extends Component {
 
   render() {
     return (
-      <div className="tareas-container">
-        <div className="tareas-container__header">
-          <div>
-            <h1>Tareas</h1>
+      <Layout>
+        <div className="tareas-container">
+          <div className="tareas-container__header">
+            <div>
+              <h1>Tareas</h1>
+            </div>
+            <div className="tareas-container__header__actions">
+              <button onClick={this.showDrawerCreate}>
+                <FontAwesomeIcon icon={faPlus} className="icon-plus" />
+              </button>
+            </div>
           </div>
-          <div className="tareas-container__header__actions">
-            <button onClick={this.showDrawerCreate}>
-              <FontAwesomeIcon icon={faPlus} className="icon-plus" />
+          <div className="tareas-container__searchbar">
+            <button>
+              <FontAwesomeIcon 
+                icon={faSearch} 
+                className="icon-plus" 
+                onClick={this.handleSearch}
+              />
             </button>
-          </div>
-        </div>
-        <div className="tareas-container__searchbar">
-          <button>
-            <FontAwesomeIcon 
-              icon={faSearch} 
-              className="icon-plus" 
-              onClick={this.handleSearch}
+            <Input
+              value={this.state.search}
+              placeholder="Filtrar"
+              onChange={this.handleSearchField}
             />
-          </button>
-          <Input
-            value={this.state.search}
-            placeholder="Filtrar"
-            onChange={this.handleSearchField}
-          />
+          </div>
+            {
+              this.state.isLoading
+                ? <Icon type="loading" className="spinner"/>
+                  :
+                    <Table 
+                      content={this.state.tareas} 
+                      tableType={this.props.tableType}
+                      openUpdateDrawer={this.showDrawerUpdate}
+                      updateTarea={this.updateTarea}
+                      deleteTarea={this.deleteTarea}
+                      finishTarea={this.finishTarea}
+                      unfinishTarea={this.unfinishTarea}
+                      fetchImagesTarea={this.fetchImagesTarea}
+                      isCreateForm={this.state.isCreateForm}
+                    />
+            }
+          <div className="tareas-container__stadistics">
+            <p>Porcentaje tareas realizadas:</p>
+            <Progress
+              type="circle"
+              percent={this.calculatePercentage()} 
+            />
+          </div>
+          <Drawer
+            placement="right"
+            width="100%"
+            className="form-drawer"
+            closable={true}
+            onClose={this.onCloseDrawer}
+            visible={this.state.isVisible}
+          >
+            <TareaForm 
+              isCreateForm={this.state.isCreateForm} 
+              createTarea={this.createTarea}
+            />
+          </Drawer>
+          <BackTop className="backtop"/>
         </div>
-          {
-            this.state.isLoading
-              ? <Icon type="loading" className="spinner"/>
-                :
-                  <Table 
-                    content={this.state.tareas} 
-                    tableType={this.props.tableType}
-                    openUpdateDrawer={this.showDrawerUpdate}
-                    updateTarea={this.updateTarea}
-                    deleteTarea={this.deleteTarea}
-                    finishTarea={this.finishTarea}
-                    unfinishTarea={this.unfinishTarea}
-                    isCreateForm={this.state.isCreateForm}
-                  />
-          }
-        <div className="tareas-container__stadistics">
-          <p>Porcentaje tareas realizadas:</p>
-          <Progress
-            type="dashboard"
-            percent={this.calculatePercentage()} 
-          />
-        </div>
-        <Drawer
-          placement="right"
-          width="100%"
-          className="form-drawer"
-          closable={true}
-          onClose={this.onCloseDrawer}
-          visible={this.state.isVisible}
-        >
-          <TareaForm 
-            isCreateForm={this.state.isCreateForm} 
-            createTarea={this.createTarea}
-          />
-        </Drawer>
-        <BackTop className="backtop"/>
-      </div>
+      </Layout>
     );
   }
 }

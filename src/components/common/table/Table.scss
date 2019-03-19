@@ -37,7 +37,7 @@
   align-self: flex-end;
 }
 
-.row__content {
+.row-content {
   max-height: 1000px;
   font-family: 'Montserrat', sans-serif;
   font-size: 30px;
@@ -45,16 +45,16 @@
   display: block;
 }
 
-.row__content.hidden {
+.row-content.hidden {
   max-height: 0px;
   display: none;
 }
 
-.row__content svg {
+.row-content svg {
   margin-left: 15px;
 }
 
-.row__content p {
+.row-content p {
   overflow-wrap: break-word;
   margin-left: 15px;
 }

@@ -10,6 +10,16 @@ exports.listTareas = function (req, res) {
     });
 };
 
+exports.fetchImagesTarea = function (req, res) {
+  manageTareas.fetchImagesTarea(req.query.IdTarea)
+    .then(function (rows) {
+      res.send(rows);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+};
+
 exports.newTarea = function (req, res) {
   const tarea = {
     titulo: req.body.titulo,

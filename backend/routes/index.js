@@ -14,6 +14,7 @@ router.post('/tareas/delete', tareasController.deleteTarea);
 router.post('/tareas/update', tareasController.updateTarea);
 router.post('/tareas/finish', tareasController.finishTarea);
 router.post('/tareas/unfinish', tareasController.unfinishTarea);
+router.get('/tareas/images', tareasController.fetchImagesTarea);
 
 
 module.exports = router;

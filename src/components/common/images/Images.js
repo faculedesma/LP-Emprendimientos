@@ -1,18 +1,17 @@
 import React from 'react';
 
-const Images = () => {
+const Images =  ({ IdTarea, fetchImagesTarea }) => {
+  const imagesPaths = fetchImagesTarea(IdTarea);
   return (
     <div>
       {
-        this.state.imagesPaths 
-          ? this.state.imagesPaths.map(image => {
-              //<img src={image.PATH} />
-              <p>{image.PATH}</p>
-            })
-            : <p>Cargando</p> 
+        //imagesPaths.map(image => {
+        //  <img src={image.PATH} />
+        //})
+        <p>Cargando</p> 
       }
     </div>
-  );
+  ); 
 }
 
 export default Images;

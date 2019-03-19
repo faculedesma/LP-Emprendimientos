@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Input, DatePicker  } from 'antd';
+import { Input  } from 'antd';
 
 const { TextArea } = Input;
 
@@ -8,9 +8,7 @@ class TareaForm extends Component {
     super(props);
     this.state = {
       Titulo: props.isCreateForm ? '' : props.tarea.Titulo,
-      Descripcion: props.isCreateForm ? '' : props.tarea.Descripcion,
-      FechaInicio: props.isCreateForm ? '' : props.tarea.FechaInicio,
-      FechaFin: props.isCreateForm ? '' : props.tarea.FechaFin
+      Descripcion: props.isCreateForm ? '' : props.tarea.Descripcion
     };
   }
 
@@ -23,18 +21,6 @@ class TareaForm extends Component {
   onChangeDescripcion = e => {
     this.setState({
       Descripcion: e.target.value
-    });
-  }
-  
-  onChangeInitialDate = (date, dateString) => {
-    this.setState({
-      FechaInicio: dateString
-    });
-  }
-
-  onChangeEndDate = (date, dateString) => {
-    this.setState({
-      FechaFin: dateString
     });
   }
 
@@ -53,22 +39,18 @@ class TareaForm extends Component {
       IdTarea: this.props.tarea.IdTarea,
       Titulo: this.state.Titulo,
       Descripcion: this.state.Descripcion,
-      FechaInicio: this.state.FechaInicio,
-      FechaFin: this.state.FechaFin
     };
     this.props.updateTarea(tarea);
     this.setState({
       Titulo: '',
-      Descripcion: '',
-      FechaInicio: '',
-      FechaFin: ''
+      Descripcion: ''
     });
     this.props.onCloseDrawer();
   }
 
 
   render() {
-    const { Titulo, Descripcion, FechaInicio, FechaFin } = this.state;
+    const { Titulo, Descripcion } = this.state;
     const { isCreateForm } = this.props;
 
     return (
@@ -102,17 +84,14 @@ class TareaForm extends Component {
               </div>
               <input className="form-submit__button"type="submit" value="CREAR"/> 
             </div>
-          : <div className="tarea-form__dates">
-              <p>Fecha Inicio</p>
-                <DatePicker 
-                  onChange={this.onChangeInitialDate}
-                  placeholder={FechaInicio}
-                />
-              <p>Fecha Fin</p>
-                < DatePicker 
-                  onChange={this.onChangeEndDate}
-                  placeholder={FechaFin}
-                />
+          : <div className="tarea-form__notes">
+              <div>
+                <p>*Fechas de la tarea:</p> 
+              </div>
+              <div>
+                <span><b>Fecha Inicio:</b> Fecha en la que se creó la tarea. No se puede modificar.</span>
+                <span><b>Fecha Fin:</b> Se modifica al cambiar el Estado de la tarea.</span>
+              </div>
               <input className="form-submit__button"type="submit" value="MODIFICAR"/> 
             </div>
         }

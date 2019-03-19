@@ -1,8 +1,10 @@
 import React from 'react';
+import LayoutHeader from './LayoutHeader';
+import LayoutContent from './LayoutContent';
 import { Drawer } from 'antd';
-import Tareas from '../pages/tareas/TareasConnector';
 import '../../../node_modules/font-awesome/css/font-awesome.min.css';
 import './Layout.scss';
+import LayoutFooter from './LayoutFooter';
 
 const tableType = {
   TAREAS: 'TAREAS',
@@ -12,83 +14,49 @@ const tableType = {
 
 class Layout extends React.Component {
   state = {
-    visibleLeft: false,
-    visibleTop: false
+    isVisible: false,
+    isTopDrawer: false
   };
 
-  showDrawer = () => {
+  showLeftDrawer = () => {
     this.setState({
-      visibleLeft: true,
-    });
-  };
-
-  onCloseDrawer= () => {
-    this.setState({
-      visibleLeft: false,
+      isTopDrawer: false,
+      isVisible: true
     });
   };
 
   showTopDrawer = () => {
     this.setState({
-      visibleTop: true,
+      isTopDrawer: true,
+      isVisible: true
     });
   };
 
-  onCloseTopDrawer= () => {
+  onCloseDrawer = () => {
     this.setState({
-      visibleTop: false,
+      isVisible: false
     });
   };
 
   render() {
     return (
         <div className="app-layout">
-          <div className="app-layout__header">
-            <ul>
-              <li onClick={this.showDrawer}>
-                <div></div>
-                <div></div>
-                <div></div>
-              </li>
-              <li><i onClick={this.showTopDrawer} className="fa fa-user-circle"/></li>
-            </ul>
-          </div>
-          <div className="app-layout__content">
-            <div className="app-layout__content__title">
-              <p>CHACABUCO 465</p>
-            </div>
-            <Tareas tableType={tableType.TAREAS} />
-          </div>
-          <div className="app-layout__footer">
-            <ul>
-              <li>
-                <i className="fa fa-cogs"/>
-              </li>
-              <li>
-                <i className="fa fa-calendar"/>
-              </li>
-              <li>
-                <i className="fa fa-list-ol"/>
-                </li>
-            </ul>
-          </div>
+          <LayoutHeader 
+            showLeftDrawer={this.showLeftDrawer}
+            showTopDrawer={this.showTopDrawer}
+          />
+          <LayoutContent 
+            children={this.props.children} 
+          />
+          <LayoutFooter />
           <Drawer
-            placement="left"
-            width="50%"
+            placement={this.state.isTopDrawer ? 'top' : 'left'}
+            width={this.state.isTopDrawer ? '100%' : '50%'}
+            height={this.state.isTopDrawer ? '40%' : '100%'}
             closable={false}
             onClose={this.onCloseDrawer}
-            visible={this.state.visibleLeft}
+            visible={this.state.isVisible}
           >
-            
-          </Drawer>
-          <Drawer
-            placement="top"
-            height="40%"
-            closable={false}
-            onClose={this.onCloseTopDrawer}
-            visible={this.state.visibleTop}
-          >
-            
           </Drawer>
         </div>
     );

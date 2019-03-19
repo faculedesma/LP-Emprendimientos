@@ -5,6 +5,8 @@ const baseURL = 'http://192.168.0.15:3000';
 
 const fetchTareasSuccess = tareas => dispatch => { dispatch({ type: actionTypes.FETCH_TAREAS_SUCCESS, tareas }); };
 
+const fetchImagesTareaSuccess = imagesPaths => dispatch => { dispatch({ type: actionTypes.FETCH_IMAGES_SUCCESS, imagesPaths }); };
+
 const cleanQueryResult = () => dispatch => { dispatch({ type: actionTypes.CLEAN_RESULT_QUERY })}
 
 const queryTareasResult = queryResult => dispatch => { dispatch({ type: actionTypes.QUERY_TAREA_RESULT, queryResult }); };
@@ -21,9 +23,10 @@ const fetchTareas = titulo => dispatch => {
 };
 
 const fetchImagesTarea = IdTarea => dispatch => {
-  axios.get(`${baseURL}/tareas?IdTarea=${IdTarea}`)
+  axios.get(`${baseURL}/tareas/images?IdTarea=${IdTarea}`)
     .then(res => {
-      dispatch(fetchImagesTarea(res.data[0]));
+      console.log(res.data[0][0]);
+      //dispatch(fetchImagesTareaSuccess(res.data[0][0]));
     })
     .catch(e => {
       console.log(e);

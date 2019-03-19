@@ -1,7 +1,8 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { 
-  fetchTareas, 
+  fetchTareas,
+  fetchImagesTarea, 
   createTarea, 
   deleteTarea, 
   updateTarea,
@@ -12,7 +13,7 @@ import TareasPage from './TareasPage';
 
 const mapDispatchToProps = dispatch => ({
   tareasActions: bindActionCreators( { 
-    fetchTareas, createTarea, deleteTarea, updateTarea, finishTarea, unfinishTarea 
+    fetchTareas, createTarea, deleteTarea, updateTarea, finishTarea, unfinishTarea, fetchImagesTarea 
   }, dispatch)
 });
 

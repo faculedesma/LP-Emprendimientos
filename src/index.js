@@ -5,6 +5,7 @@ import { render } from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
 import configureStore, { history } from './redux/configureStore';
 import Root from './components/Root';
+
 const store = configureStore();
 
 render(

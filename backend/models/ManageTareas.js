@@ -34,6 +34,16 @@ exports.listTareas = function (titulo) {
   }
 };
 
+exports.fetchImagesTarea = function (IdTarea) {
+  const sql = `CALL lsp_fetch_images_tarea(${IdTarea})`;
+  return new Promise(function (resolve, reject) {
+    db.query(sql, function (error, rows, fields) {
+      if (error) reject(error);
+      resolve(rows);
+    });
+  });
+};
+
 exports.newTarea = function (tarea) {
   const sql = `CALL lsp_new_tarea(1,'${tarea.titulo}', '${tarea.descripcion}','Juan Jose Ledesma')`;
   return new Promise(function (resolve, reject) {
@@ -54,8 +64,8 @@ exports.deleteTarea = function (IdTarea) {
   });
 };
 
-exports.updateTarea = function (IdTarea, Titulo, Descripcion, FechaInicio, FechaFin) {
-  const sql = `CALL lsp_update_tarea(${IdTarea},'${Titulo}','${Descripcion}','${FechaInicio}','${FechaFin}')`;
+exports.updateTarea = function (IdTarea, Titulo, Descripcion) {
+  const sql = `CALL lsp_update_tarea(${IdTarea},'${Titulo}','${Descripcion}')`;
   return new Promise(function (resolve, reject) {
     db.query(sql, function (error, result, fields) {
       if (error) reject(error);

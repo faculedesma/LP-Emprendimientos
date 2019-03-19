@@ -2,7 +2,7 @@ import React from 'react';
 import TableRow from './TableRow';
 import './Table.scss';
 
-const Table = ({ tableType, content, updateTarea, deleteTarea, finishTarea, unfinishTarea, isCreateForm }) => {
+const Table = ({ tableType, content, updateTarea, deleteTarea, finishTarea, unfinishTarea, fetchImagesTarea, isCreateForm }) => {
   return (
     <div className="table">
       {
@@ -16,6 +16,7 @@ const Table = ({ tableType, content, updateTarea, deleteTarea, finishTarea, unfi
               handleDeleteTarea={deleteTarea}
               finishTarea={finishTarea}
               unfinishTarea={unfinishTarea}
+              fetchImagesTarea={fetchImagesTarea}
               isCreateForm={isCreateForm}
             />
           );
