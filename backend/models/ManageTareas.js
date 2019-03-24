@@ -13,9 +13,9 @@ db.connect((err) => {
   console.log('Connected!');
 });
 
-exports.listTareas = function (titulo) {
+exports.fetchTareas = function (IdObra, titulo) {
   if(titulo === '') {
-    const sql = 'CALL lsp_list_tareas()';
+    const sql = `CALL lsp_list_tareas(${IdObra})`;
     return new Promise(function (resolve, reject) {
       db.query(sql, function (error, rows, fields) {
         if (error) reject(error);
@@ -24,7 +24,7 @@ exports.listTareas = function (titulo) {
     });
   }
   else {
-    const sql = `CALL lsp_search_tareas('${titulo}')`;
+    const sql = `CALL lsp_search_tareas(${IdObra}, '${titulo}')`;
     return new Promise(function (resolve, reject) {
       db.query(sql, function (error, rows, fields) {
         if (error) reject(error);
@@ -44,8 +44,8 @@ exports.fetchImagesTarea = function (IdTarea) {
   });
 };
 
-exports.newTarea = function (tarea) {
-  const sql = `CALL lsp_new_tarea(1,'${tarea.titulo}', '${tarea.descripcion}','Juan Jose Ledesma')`;
+exports.createTarea = function (tarea) {
+  const sql = `CALL lsp_create_tarea(${tarea.IdObra},'${tarea.titulo}', '${tarea.descripcion}','Juan Jose Ledesma')`;
   return new Promise(function (resolve, reject) {
     db.query(sql, function (error, result, fields) {
       if (error) reject(error);

@@ -1,7 +1,7 @@
 var manageTareas = require('../models/ManageTareas');
 
-exports.listTareas = function (req, res) {
-  manageTareas.listTareas(req.query.titulo)
+exports.fetchTareas = function (req, res) {
+  manageTareas.fetchTareas(req.query.IdObra, req.query.titulo)
     .then(function (rows) {
       res.send(rows);
     })
@@ -20,13 +20,14 @@ exports.fetchImagesTarea = function (req, res) {
     });
 };
 
-exports.newTarea = function (req, res) {
+exports.createTarea = function (req, res) {
   const tarea = {
+    IdObra: req.body.IdObra,
     titulo: req.body.titulo,
     descripcion: req.body.descripcion
   };
 
-  manageTareas.newTarea(tarea)
+  manageTareas.createTarea(tarea)
     .then(function (result) {
       res.send(result);
     })

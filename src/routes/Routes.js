@@ -1,8 +1,10 @@
 import React from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 import LoginPage from '../components/pages/login/LoginPage';
-import HomePage from '../components/pages/home/HomePage';
+import ObrasPage from '../components/pages/obras/ObrasPageConnector';
 import TareasPage from '../components/pages/tareas/TareasConnector';
+import MaterialesPage from '../components/pages/materiales/MaterialesPage';
+import ReunionesPage from '../components/pages/reuniones/ReunionesPage';
 
 class Routes extends React.Component {
   render() {
@@ -10,8 +12,10 @@ class Routes extends React.Component {
       <BrowserRouter>
         <div>
           {/* <Route path="/" component={LoginPage}/> */}
-          <Route path="/home" component={HomePage}/>
+          <Route path="/obras" component={ObrasPage}/>
           <Route path="/tareas" component={TareasPage}/>
+          <Route path="/materiales" component={MaterialesPage}/>
+          <Route path="/reuniones" component={ReunionesPage}/>
         </div>
       </BrowserRouter>
     );

@@ -1,22 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat');
 
-.tareas-container {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.tareas-container__header {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.tareas-container__header h1 {
-  width: 100%;
+.tareas-container__header > div h1 {
   font-family: 'Montserrat', sans-serif;
   font-size: 45px;
   text-align: center;

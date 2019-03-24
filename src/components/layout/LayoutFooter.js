@@ -1,17 +1,18 @@
 import React from 'react';
+import { Link } from 'react-router-dom'
 
-const LayoutFooter = () => (
+const LayoutFooter = ({IdObra}) => (
   <div className="app-layout__footer">
     <ul>
       <li>
-        <i className="fa fa-cogs"/>
+        <Link to="/materiales"><i className="fa fa-cogs"/></Link>
       </li>
       <li>
-        <i className="fa fa-calendar"/>
+        <Link to="/reuniones"><i className="fa fa-calendar"/></Link>
       </li>
       <li>
-        <i className="fa fa-list-ol"/>
-        </li>
+        <Link to={{ pathname: '/tareas', state: { IdObra } }}><i className="fa fa-list-ol"/></Link>
+      </li>
     </ul>
   </div>
 );

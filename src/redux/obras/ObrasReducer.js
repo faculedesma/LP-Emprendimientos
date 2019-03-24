@@ -1,4 +1,4 @@
-import * as types from './ObrasConstants';
+import actionTypes from './ObrasConstants';
 
 const initialStore = {
   obras: []
@@ -6,8 +6,8 @@ const initialStore = {
 
 export default function obrasReducer(state = initialStore, action) {
   switch (action.type) {
-    case types.LOAD_OBRAS_SUCCESS:
-      return action.obras;
+    case actionTypes.FETCH_OBRAS_SUCCESS:
+      return {...state, obras: action.obras};
 
     default:
       return state;

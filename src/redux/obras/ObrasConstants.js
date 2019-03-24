@@ -1,4 +1,5 @@
-export const LOAD_OBRAS_SUCCESS = 'LOAD_OBRAS_SUCCESS';
-export const CREATE_OBRA_SUCCESS = 'CREATE_OBRA_SUCCESS';
-export const DELETE_OBRA_SUCCESS = 'DELETE_OBRA_SUCCESS';
-export const UPDATE_OBRA_SUCCESS = 'UPDATE_OBRA_SUCCESS';
+const actionTypes = {
+  FETCH_OBRAS_SUCCESS: 'FETCH_OBRAS_SUCCESS'
+};
+
+export default actionTypes;

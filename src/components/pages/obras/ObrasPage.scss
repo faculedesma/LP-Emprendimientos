@@ -1,0 +1,36 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
+
+.obras-page {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Montserrat', sans-serif; 
+}
+
+.obras-page p {
+  height: 5vh;
+  font-size: 30px;
+  margin-top: 50px;
+}
+
+.obras-page > div {
+  margin: 50px 0;
+}
+
+.obras-page__content {
+  width: 100%;
+  border: 2px solid lightgray;
+  border-radius: 10px;
+}
+
+.obras-page__content p {
+  margin: 20px 10px 0 10px;
+  border-bottom: 2px solid lightgray;
+}
+
+.obras-page__content p b {
+  margin-right: 20px;
+}

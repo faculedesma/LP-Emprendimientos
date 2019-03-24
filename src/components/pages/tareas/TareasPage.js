@@ -9,17 +9,21 @@ import { faPlus, faSearch } from '@fortawesome/free-solid-svg-icons';
 import './TareasPage.scss';
 
 class Tareas extends Component {
-  state = {
-    tareas: [],
-    search: '',
-    queryResult: '',
-    isLoading: true,
-    isVisible: false,
-    isCreateForm: false
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      tareas: [],
+      IdObra: props.location.state.IdObra,
+      search: '',
+      queryResult: '',
+      isLoading: true,
+      isVisible: false,
+      isCreateForm: false
+    };
+  }
 
   componentDidMount() {
-    this.props.tareasActions.fetchTareas('');
+    this.props.tareasActions.fetchTareas(this.state.IdObra, '');
   };
 
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -42,13 +46,13 @@ class Tareas extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (!prevState.queryResult && this.state.queryResult){
-      prevProps.tareasActions.fetchTareas('');
+      prevProps.tareasActions.fetchTareas(this.state.IdObra, '');
       this.showNotification();
     }
   };
 
   createTarea = (Titulo, Descripcion) => {
-    this.props.tareasActions.createTarea(Titulo, Descripcion);
+    this.props.tareasActions.createTarea(this.state.IdObra, Titulo, Descripcion);
     this.onCloseDrawer();
   };
 
@@ -62,13 +66,13 @@ class Tareas extends Component {
 
   fetchImagesTarea = IdTarea => this.props.tareasActions.fetchImagesTarea(IdTarea);
   
-  handleSearch = () => this.props.tareasActions.fetchTareas(this.state.search);
+  handleSearch = () => this.props.tareasActions.fetchTareas(this.state.IdObra, this.state.search);
 
   handleSearchField = e => {
     this.setState({
       search: e.target.value
     }, () => {
-      this.props.tareasActions.fetchTareas(this.state.search);
+      this.props.tareasActions.fetchTareas(this.state.IdObra, this.state.search);
     });
   };
 

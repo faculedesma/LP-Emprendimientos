@@ -1,12 +1,19 @@
-import * as types from './ObrasConstants';
 import axios from 'axios';
+import actionTypes from './ObrasConstants';
 
-function loadObras() {
-    axios.get('http://localhost:3000').then(res => {
-      console.log(res);
-      //return res;
-    }).catch(e => console.log(e));
-}
+const baseURL = 'http://192.168.0.15:3000';
 
-export default loadObras;
+const fetchObrasSuccess = obras => dispatch => { dispatch({ type: actionTypes.FETCH_OBRAS_SUCCESS, obras }); };
+
+const fetchObras = () => dispatch => {
+  axios.get(`${baseURL}/obras`)
+    .then(res => {
+      dispatch(fetchObrasSuccess(res.data[0]));
+    })
+    .catch(e => {
+      console.log(e);
+    });
+};
+
+export { fetchObras };
 

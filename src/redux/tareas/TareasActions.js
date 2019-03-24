@@ -11,9 +11,9 @@ const cleanQueryResult = () => dispatch => { dispatch({ type: actionTypes.CLEAN_
 
 const queryTareasResult = queryResult => dispatch => { dispatch({ type: actionTypes.QUERY_TAREA_RESULT, queryResult }); };
 
-const fetchTareas = titulo => dispatch => {
+const fetchTareas = (IdObra, titulo) => dispatch => {
   dispatch(cleanQueryResult());
-  axios.get(`${baseURL}/tareas?titulo=${titulo}`)
+  axios.get(`${baseURL}/tareas?IdObra=${IdObra}&titulo=${titulo}`)
     .then(res => {
       dispatch(fetchTareasSuccess(res.data[0]));
     })
@@ -33,9 +33,10 @@ const fetchImagesTarea = IdTarea => dispatch => {
     });
 };
 
-const createTarea = (titulo, descripcion) => dispatch => {
+const createTarea = (IdObra,titulo, descripcion) => dispatch => {
   axios.post(`${baseURL}/tareas/create`,
     {
+      IdObra: IdObra,
       titulo: titulo,
       descripcion: descripcion
     })

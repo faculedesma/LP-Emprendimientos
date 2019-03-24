@@ -1,10 +1,11 @@
 import React from 'react';
+import { Link } from 'react-router-dom'
 import LayoutHeader from './LayoutHeader';
 import LayoutContent from './LayoutContent';
+import LayoutFooter from './LayoutFooter';
 import { Drawer } from 'antd';
 import '../../../node_modules/font-awesome/css/font-awesome.min.css';
 import './Layout.scss';
-import LayoutFooter from './LayoutFooter';
 
 const tableType = {
   TAREAS: 'TAREAS',
@@ -39,16 +40,19 @@ class Layout extends React.Component {
   };
 
   render() {
-    return (
+    return(
         <div className="app-layout">
           <LayoutHeader 
             showLeftDrawer={this.showLeftDrawer}
             showTopDrawer={this.showTopDrawer}
+            direccionObra={this.props.direccionObra}
           />
           <LayoutContent 
-            children={this.props.children} 
+            children={this.props.children}
           />
-          <LayoutFooter />
+          <LayoutFooter 
+            IdObra={this.props.IdObra}
+          />
           <Drawer
             placement={this.state.isTopDrawer ? 'top' : 'left'}
             width={this.state.isTopDrawer ? '100%' : '50%'}
@@ -57,6 +61,9 @@ class Layout extends React.Component {
             onClose={this.onCloseDrawer}
             visible={this.state.isVisible}
           >
+            <ul>
+              <Link to="/obras"><li>OBRAS</li></Link>
+            </ul>
           </Drawer>
         </div>
     );
