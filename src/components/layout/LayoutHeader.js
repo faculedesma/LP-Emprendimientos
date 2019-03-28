@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUserCircle } from '@fortawesome/fontawesome-free-regular';
 
 class LayoutHeader extends Component {
   state = {
@@ -23,16 +25,23 @@ class LayoutHeader extends Component {
   render() {
     return(
     <div className="app-layout__header">
-      <ul>
-        <li onClick={this.props.showLeftDrawer}>
-          <div></div>
-          <div></div>
-          <div></div>
-        </li>
-        <li><i onClick={this.props.showTopDrawer} className="fa fa-user-circle"/></li>
-      </ul>
+      <div>
+        <ul>
+          <li onClick={this.props.showLeftDrawer}>
+            <div></div>
+            <div></div>
+            <div></div>
+          </li>
+          <li>
+            <FontAwesomeIcon onClick={this.props.showTopDrawer} icon={faUserCircle} />
+            {/* <i  className={faUserCircle}/> */}
+            <p>Juan Jose</p>
+          </li>
+        </ul>
+      </div>
       <div className="app-layout__header__title">
-        <p>{this.state.direccionObra}</p>
+        {/* <p>{this.state.direccionObra}</p> */}
+        <p>CHACABUCO 465</p>
       </div>
     </div>
   );

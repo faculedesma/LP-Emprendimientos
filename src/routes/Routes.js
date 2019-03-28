@@ -3,7 +3,7 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import LoginPage from '../components/pages/login/LoginPage';
 import ObrasPage from '../components/pages/obras/ObrasPageConnector';
 import TareasPage from '../components/pages/tareas/TareasConnector';
-import MaterialesPage from '../components/pages/materiales/MaterialesPage';
+import MaterialesPage from '../components/pages/materiales/MaterialesPageConnector';
 import ReunionesPage from '../components/pages/reuniones/ReunionesPage';
 
 class Routes extends React.Component {

@@ -7,12 +7,6 @@ import { Drawer } from 'antd';
 import '../../../node_modules/font-awesome/css/font-awesome.min.css';
 import './Layout.scss';
 
-const tableType = {
-  TAREAS: 'TAREAS',
-  REUNIONES: 'REUNIONES',
-  MATERIALES: 'MATERIALES'
-};
-
 class Layout extends React.Component {
   state = {
     isVisible: false,

@@ -13,7 +13,7 @@ class ObrasPage extends Component {
     direccionObraSelected: ""
   }
 
-  componentDidMount = () => {
+  componentDidMount() {
     this.props.obrasActions.fetchObras();
   }
 

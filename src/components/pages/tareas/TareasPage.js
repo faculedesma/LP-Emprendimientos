@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faSearch } from '@fortawesome/free-solid-svg-icons';
 import './TareasPage.scss';
 
-class Tareas extends Component {
+class TareasPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -140,7 +140,7 @@ class Tareas extends Component {
                   :
                     <Table 
                       content={this.state.tareas} 
-                      tableType={this.props.tableType}
+                      tableType="TAREAS"
                       openUpdateDrawer={this.showDrawerUpdate}
                       updateTarea={this.updateTarea}
                       deleteTarea={this.deleteTarea}
@@ -177,9 +177,9 @@ class Tareas extends Component {
   }
 }
 
-Tareas.propTypes = {
+TareasPage.propTypes = {
   fetchTareas: PropTypes.func,
   percent: PropTypes.string
 };
 
-export default Tareas;
+export default TareasPage;

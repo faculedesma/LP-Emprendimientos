@@ -1,21 +1,10 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat');
 
-.tareas-container {
-  width: 100%;
-}
-
-.tareas-container__header {
-  width: 100%;
-  margin-top: 5%; 
-}
-
 .tareas-container__header > div h1 {
   font-family: 'Montserrat', sans-serif;
-  //font-size: 45px;
-  font-size: 25px;
+  font-size: 45px;
   text-align: center;
-  //margin: 40px 0;
-  margin: 0;
+  margin: 40px 0;
 }
 
 .tareas-container__header__actions {
@@ -30,8 +19,7 @@
 .tareas-container__header__actions button {
   background: none;
   border: none;
-  //margin-left: 15px;
-  margin-right: 15px;
+  margin-left: 15px;
 }
 
 .icon-plus {
@@ -40,24 +28,19 @@
 }
 
 .tareas-container__searchbar {
-  //width: 100%;
-  width: 50%;
-  //height: 70px;
-  height: 30px;
+  width: 100%;
+  height: 70px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  margin-left: 40px;//sacar en @media
 }
 
 .tareas-container__searchbar input {
-  width: 100%;
-  //width: 90%;
+  width: 90%;
   height: 100%;
   border: none;
-  //font-size: 30px;
-  font-size: 15px;
+  font-size: 30px;
   font-family: 'Montserrat', sans-serif;
   align-self: flex-end;
 }
@@ -67,8 +50,7 @@
 }
 
 .tareas-container__searchbar button {
-  //width: 10%;
-  width: 5%;
+  width: 10%;
   height: 100%;
   background: none;
   border: none;
@@ -76,19 +58,16 @@
 }
 
 .tareas-container__stadistics {
-  width: 50%;//sacar en @media
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   margin: 40px 0;
-  margin-left: 40px;//sacar en @media
 }
 
 .tareas-container__stadistics p {
   font-family: 'Montserrat', sans-serif;
-  font-size: 20px;
-  //font-size: 40px; 
+  font-size: 40px; 
 }
 
 .tareas-container__stadistics > div > div {
@@ -98,14 +77,8 @@
 
 .tareas-container__stadistics span {
   font-family: 'Montserrat', sans-serif;
-  //font-size: 35px;
-  font-size: 25px;
+  font-size: 35px;
   margin-top: 25px;
-}
-
-.tareas-container__stadistics svg {//@eliminar en @media
-  width: 110px !important;
-  height: 120px !important;
 }
 
 .tareas-container__table__images span {
